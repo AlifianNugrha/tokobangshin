@@ -46,10 +46,12 @@ const ProductCard = ({
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
     
+    // Redirect immediately
+    window.open(whatsappUrl, "_blank");
+    
     setTimeout(() => {
-      window.open(whatsappUrl, "_blank");
       setIsCopied(false);
-    }, 1000);
+    }, 2000);
   };
 
   return (
@@ -63,9 +65,9 @@ const ProductCard = ({
       >
         {/* Clickable Image Area — opens detail modal */}
         <button
-          onClick={() => setModalOpen(true)}
+          onClick={handleBuy}
           className="relative w-full aspect-square bg-gradient-to-br from-primary/10 via-accent/50 to-primary/5 overflow-hidden cursor-pointer"
-          aria-label={`Lihat detail ${product.name}`}
+          aria-label={`Beli ${product.name}`}
         >
           {!imgError ? (
             <img
@@ -94,7 +96,7 @@ const ProductCard = ({
           {/* Hover label */}
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <span className="bg-white/90 text-foreground text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm">
-              👆 Lihat Detail
+              🛒 Beli Sekarang
             </span>
           </div>
         </button>
@@ -102,7 +104,7 @@ const ProductCard = ({
         {/* Body section — only name + button */}
         <div className="p-2.5 md:p-4 flex-1 flex flex-col">
           <button
-            onClick={() => setModalOpen(true)}
+            onClick={handleBuy}
             className="text-left mb-2 group/title w-full"
           >
             <h3 className="font-bold text-foreground text-[11px] md:text-sm leading-tight group-hover/title:text-primary transition-colors line-clamp-2">

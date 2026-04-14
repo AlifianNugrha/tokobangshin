@@ -73,10 +73,12 @@ const ProductDetailModal = ({ product, open, onOpenChange }: Props) => {
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
     
+    // Redirect immediately
+    window.open(whatsappUrl, "_blank");
+    
     setTimeout(() => {
-      window.open(whatsappUrl, "_blank");
       setIsCopied(false);
-    }, 1000);
+    }, 2000);
   };
 
   return (

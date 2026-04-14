@@ -38,10 +38,12 @@ const AscensionTable = () => {
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
 
+    // Redirect immediately
+    window.open(whatsappUrl, "_blank");
+
     setTimeout(() => {
-      window.open(whatsappUrl, "_blank");
       setIsCopied(false);
-    }, 1000);
+    }, 2000);
   };
 
   return (
@@ -56,7 +58,7 @@ const AscensionTable = () => {
           <div className="bg-card rounded-2xl border border-border shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden">
             {/* Image header - Clickable */}
             <button
-              onClick={() => setModalOpen(true)}
+              onClick={handleBuy}
               className="relative w-full aspect-[16/9] md:aspect-[4/3] overflow-hidden bg-muted block cursor-pointer"
             >
               <img
@@ -72,7 +74,7 @@ const AscensionTable = () => {
               </div>
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                 <span className="bg-white/90 text-foreground text-xs font-bold px-4 py-2 rounded-full shadow-lg">
-                  👆 Lihat Detail
+                  🛒 Beli Sekarang
                 </span>
               </div>
             </button>
@@ -80,7 +82,7 @@ const AscensionTable = () => {
             {/* Body & Buy button */}
             <div className="p-5 md:p-6 flex flex-col">
               <button
-                onClick={() => setModalOpen(true)}
+                onClick={handleBuy}
                 className="hover:text-primary transition-colors cursor-pointer"
               >
                 <h2 className="text-xl md:text-2xl font-extrabold text-foreground text-center mb-1.5 flex items-center justify-center gap-2">
