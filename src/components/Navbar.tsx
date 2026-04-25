@@ -1,65 +1,28 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Bell, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const links = [
-  { label: "Swords", href: "#katalog" },
-  { label: "Melee", href: "#melee" },
-  { label: "Items", href: "#items" },
-  { label: "Ascension", href: "#ascension" },
-];
-
 const Navbar = () => {
-  const [open, setOpen] = useState(false);
-
-  const scrollTo = (href: string) => {
-    setOpen(false);
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
-    <nav className="sticky top-0 z-50 bg-blue shadow-lg/80 backdrop-blur-lg border-b border-border">
-      <div className="container flex items-center justify-between h-16">
-        <a href="#" className="flex items-center">
-          <img src="/logo.png" alt="Logo" className="h-10 w-auto" />
+    <nav className="sticky top-0 z-50 gradient-dana shadow-lg">
+      <div className="container flex items-center justify-between h-14 md:h-16 px-4">
+        {/* Logo + Brand */}
+        <a href="#" className="flex items-center gap-2.5">
+          <img src="/logo.png" alt="Logo" className="h-8 w-auto drop-shadow-md" />
+          <div className="flex flex-col">
+
+          </div>
         </a>
 
-        {/* Desktop */}
-        <div className="hidden md:flex items-center gap-6">
-          {links.map((l) => (
-            <button
-              key={l.href}
-              onClick={() => scrollTo(l.href)}
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-            >
-              {l.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Mobile toggle */}
-        <button className="md:hidden text-foreground" onClick={() => setOpen(!open)}>
-          {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </div>
-
-      {/* Mobile menu */}
-      <div
-        className={cn(
-          "md:hidden overflow-hidden transition-all border-b border-border bg-card",
-          open ? "max-h-60" : "max-h-0 border-b-0"
-        )}
-      >
-        <div className="container py-3 space-y-2">
-          {links.map((l) => (
-            <button
-              key={l.href}
-              onClick={() => scrollTo(l.href)}
-              className="block w-full text-left text-sm font-medium text-muted-foreground hover:text-primary py-1.5"
-            >
-              {l.label}
-            </button>
-          ))}
+        {/* Right side — Notification */}
+        <div className="flex items-center gap-2">
+          <button className="relative p-2 rounded-full glass hover:bg-white/20 transition-all">
+            <Sparkles className="w-5 h-5 text-yellow-300" />
+          </button>
+          <button className="relative p-2 rounded-full glass hover:bg-white/20 transition-all">
+            <Bell className="w-5 h-5 text-white" />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-blue-500" />
+          </button>
         </div>
       </div>
     </nav>

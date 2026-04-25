@@ -3,143 +3,219 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import CategorySection from "@/components/CategorySection";
 import AscensionTable from "@/components/AscensionTable";
-import TestimonialMarquee from "@/components/TestimonialMarquee";
-import { allSwords, allMelee, allItems } from "@/data/products";
-import { Search, X, ShoppingBag } from "lucide-react";
+import BottomNav from "@/components/BottomNav";
+import QRScanModal from "@/components/QRScanModal";
+import SocialLinksModal from "@/components/SocialLinksModal";
+import GameSelection from "@/components/GameSelection";
+import SearchView from "@/components/SearchView";
+import { Trophy, Sword, Swords, Package, Rocket, ArrowRight, Loader2 } from "lucide-react";
+import { useProducts } from "@/hooks/useProducts";
+import { cn } from "@/lib/utils";
 
 const Index = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState<"home" | "search" | "katalog">("home");
+  const [qrModalOpen, setQrModalOpen] = useState(false);
+  const [socialModalOpen, setSocialModalOpen] = useState(false);
+  const [katalogTab, setKatalogTab] = useState("sword"); // sword, melee, items, ascend
+  const { data, isLoading } = useProducts();
+  const allSwords = data?.allSwords || [];
+  const allMelee = data?.allMelee || [];
+  const allItems = data?.allItems || [];
+  
+  const handleActionSelect = (actionId: string) => {
+    setKatalogTab(actionId);
+    setCurrentPage("katalog");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-  const filteredSwords = allSwords.filter((p) =>
-    p.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-  const filteredMelee = allMelee.filter((p) =>
-    p.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-  const filteredItems = allItems.filter((p) =>
-    p.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
-      <HeroSection />
-
-      <div className="container mt-8" />
-
-      {/* Search Bar & Category Navigation Pills */}
-      <div className="container py-6 flex flex-col items-center">
-        {/* Search Input */}
-        <div className="relative w-full max-w-2xl mb-4 group">
-          <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none z-20">
-            <div className="p-2 bg-blue-500/10 rounded-xl group-focus-within:bg-blue-500/20 transition-colors">
-              <Search className="h-6 w-6 text-blue-600 drop-shadow-[0_0_8px_rgba(37,99,235,0.4)] group-focus-within:scale-110 transition-transform" />
-            </div>
-          </div>
-          <input
-            type="text"
-            className="w-full pl-16 pr-12 py-5 bg-card/90 backdrop-blur-xl border-2 border-blue-500/30 rounded-3xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 hover:border-blue-500/50 outline-none transition-all shadow-[0_15px_40px_-15px_rgba(0,0,0,0.1)] focus:shadow-[0_15px_40px_-15px_rgba(59,130,246,0.3)] text-foreground placeholder:text-muted-foreground/60 font-bold text-lg md:text-xl"
-            placeholder="Ketik nama pedang atau melee..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery("")}
-              className="absolute inset-y-0 right-4 flex items-center pr-2 text-muted-foreground hover:text-foreground transition-colors z-20"
-            >
-              <X className="h-6 w-6 bg-muted/50 rounded-full p-1" />
-            </button>
-          )}
-        </div>
-
-        {searchQuery && (
-          <div className="mb-6 animate-in fade-in slide-in-from-top-2 duration-300">
-            <span className="text-sm font-medium px-4 py-1.5 bg-blue-500/10 text-blue-600 rounded-full border border-blue-500/20 flex items-center gap-2">
-              <ShoppingBag className="w-4 h-4" />
-              Ditemukan {filteredSwords.length + filteredMelee.length + filteredItems.length} item
-            </span>
-          </div>
-        )}
-
-        <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4">
-          <button
-            onClick={() => document.getElementById("katalog")?.scrollIntoView({ behavior: "smooth" })}
-            className="px-4 py-2 md:px-6 md:py-2.5 text-sm md:text-base rounded-full bg-primary/10 text-primary font-bold hover:bg-primary/20 hover:scale-105 transition-all outline-none border border-primary/20 shadow-sm"
-          >
-            Sword
-          </button>
-          <button
-            onClick={() => document.getElementById("melee")?.scrollIntoView({ behavior: "smooth" })}
-            className="px-4 py-2 md:px-6 md:py-2.5 text-sm md:text-base rounded-full bg-primary/10 text-primary font-bold hover:bg-primary/20 hover:scale-105 transition-all outline-none border border-primary/20 shadow-sm"
-          >
-            Melee
-          </button>
-          <button
-            onClick={() => document.getElementById("items")?.scrollIntoView({ behavior: "smooth" })}
-            className="px-4 py-2 md:px-6 md:py-2.5 text-sm md:text-base rounded-full bg-primary/10 text-primary font-bold hover:bg-primary/20 hover:scale-105 transition-all outline-none border border-primary/20 shadow-sm"
-          >
-            Items
-          </button>
-          <button
-            onClick={() => document.getElementById("ascension")?.scrollIntoView({ behavior: "smooth" })}
-            className="px-4 py-2 md:px-6 md:py-2.5 text-sm md:text-base rounded-full bg-primary/10 text-primary font-bold hover:bg-primary/20 hover:scale-105 transition-all outline-none border border-primary/20 shadow-sm"
-          >
-            Ascend
-          </button>
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="flex flex-col items-center">
+          <Loader2 className="w-10 h-10 text-primary animate-spin mb-4" />
+          <p className="text-white/70 text-sm font-semibold animate-pulse">Memuat Toko Bang Shin...</p>
         </div>
       </div>
+    );
+  }
 
-      {filteredSwords.length > 0 && (
-        <>
-          <CategorySection
-            id="katalog"
-            title={`Tersedia (${filteredSwords.length}) Pedang`}
-            iconImage="/sword.png"
-            description=""
-            products={filteredSwords}
+  // If Search is active, render the dedicated search view.
+  if (currentPage === "search") {
+    return <SearchView onClose={() => setCurrentPage("home")} />;
+  }
+
+  return (
+    <div className="min-h-screen bg-background pb-bottom-nav">
+      <Navbar />
+
+      {/* --- HOME VIEW --- */}
+      {currentPage === "home" && (
+        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <HeroSection 
+            onScanClick={() => setQrModalOpen(true)} 
+            onActionSelect={handleActionSelect}
           />
-          <div className="container"><div className="h-px bg-border my-2" /></div>
-        </>
+          <GameSelection onSelect={(gameId) => {
+            if (gameId === "sailor-piece") {
+              setCurrentPage("katalog");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }} />
+
+          {/* Catalog Preview */}
+          <div className="container px-4 mt-8 mb-6">
+            <h2 className="font-extrabold text-lg text-foreground mb-4 flex items-center">
+              <Sword className="w-5 h-5 mr-2 text-[hsl(205,87%,49%)]" />
+              Populer
+            </h2>
+            <div className="h-px bg-border/60 mb-5" />
+            <CategorySection
+              id="home-preview"
+              title=""
+              products={allSwords.slice(0, 4)}
+              iconImage=""
+              description=""
+            />
+            
+            <button
+              onClick={() => {
+                setKatalogTab("sword");
+                setCurrentPage("katalog");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="mt-6 flex items-center justify-center gap-2 w-full py-4 rounded-xl glass-blue text-[hsl(205,87%,49%)] text-sm font-bold shadow-sm hover:shadow-md transition-all hover:scale-[1.01]"
+            >
+              Lihat Selengkapnya
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
       )}
 
-      {filteredMelee.length > 0 && (
-        <CategorySection
-          id="melee"
-          title={`Tersedia (${filteredMelee.length}) Melee`}
-          iconImage="/mele.png"
-          description=""
-          products={filteredMelee}
-        />
-      )}
+      {/* --- KATALOG VIEW --- */}
+      {currentPage === "katalog" && (
+        <div className="animate-in fade-in duration-300">
+          {/* Sticky Tab Header */}
+          <div className="sticky top-14 md:top-16 z-40 bg-background/80 backdrop-blur-md pt-4 pb-2 border-b border-border/50">
+            <div className="container px-4">
+              <div className="flex bg-muted/50 p-1.5 rounded-2xl md:max-w-2xl mx-auto overflow-x-auto hide-scrollbar">
+                <button
+                  onClick={() => setKatalogTab("sword")}
+                  className={cn(
+                    "flex-1 min-w-[80px] flex items-center justify-center py-2.5 rounded-xl text-xs md:text-sm font-bold transition-all",
+                    katalogTab === "sword" ? "bg-white text-[hsl(205,87%,49%)] shadow-md" : "text-muted-foreground hover:bg-white/50"
+                  )}
+                >
+                  <Sword className="w-4 h-4 mr-1.5" />
+                  Sword
+                </button>
+                <button
+                  onClick={() => setKatalogTab("melee")}
+                  className={cn(
+                    "flex-1 min-w-[80px] flex items-center justify-center py-2.5 rounded-xl text-xs md:text-sm font-bold transition-all",
+                    katalogTab === "melee" ? "bg-white text-[hsl(205,87%,49%)] shadow-md" : "text-muted-foreground hover:bg-white/50"
+                  )}
+                >
+                  <Swords className="w-4 h-4 mr-1.5" />
+                  Melee
+                </button>
+                <button
+                  onClick={() => setKatalogTab("items")}
+                  className={cn(
+                    "flex-1 min-w-[80px] flex items-center justify-center py-2.5 rounded-xl text-xs md:text-sm font-bold transition-all",
+                    katalogTab === "items" ? "bg-white text-[hsl(205,87%,49%)] shadow-md" : "text-muted-foreground hover:bg-white/50"
+                  )}
+                >
+                  <Package className="w-4 h-4 mr-1.5" />
+                  Items
+                </button>
+                <button
+                  onClick={() => setKatalogTab("ascend")}
+                  className={cn(
+                    "flex-1 min-w-[80px] flex items-center justify-center py-2.5 rounded-xl text-xs md:text-sm font-bold transition-all",
+                    katalogTab === "ascend" ? "bg-white text-[hsl(205,87%,49%)] shadow-md" : "text-muted-foreground hover:bg-white/50"
+                  )}
+                >
+                  <Rocket className="w-4 h-4 mr-1.5" />
+                  Ascend
+                </button>
+              </div>
+            </div>
+          </div>
 
-      {filteredItems.length > 0 && (
-        <CategorySection
-          id="items"
-          title={`Tersedia (${filteredItems.length}) Items`}
-          iconImage="/item.png"
-          description=""
-          products={filteredItems}
-        />
-      )}
+          <div className="min-h-[60vh] pt-2">
+            {katalogTab === "sword" && (
+              <CategorySection
+                id="sword-section"
+                title={`Pedang (${allSwords.length})`}
+                iconImage="/sword.png"
+                description="Koleksi pedang terbaik Sailor Piece."
+                products={allSwords}
+              />
+            )}
 
-      {searchQuery === "" && (
-        <>
-          <AscensionTable />
-          <div className="container"><div className="h-px bg-border" /></div>
-        </>
-      )}
+            {katalogTab === "melee" && (
+              <CategorySection
+                id="melee-section"
+                title={`Melee (${allMelee.length})`}
+                iconImage="/mele.png"
+                description="Gaya bertarung jarak dekat mematikan."
+                products={allMelee}
+              />
+            )}
 
-      {/* <TestimonialMarquee /> */}
+            {katalogTab === "items" && (
+              <CategorySection
+                id="items-section"
+                title={`Items (${allItems.length})`}
+                iconImage="/item.png"
+                description="Material form dan item kebutuhan lainnya."
+                products={allItems}
+              />
+            )}
+
+            {katalogTab === "ascend" && (
+              <div className="pt-4">
+                <AscensionTable />
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
-      <footer className="border-t border-border py-8 mt-8">
-        <div className="container text-center">
-          <p className="text-sm text-muted-foreground">
-            © 2026 toko Bang Shin. Total: {allSwords.length} Swords, {allMelee.length} Melee, {allItems.length} Items.
-          </p>
-        </div>
-      </footer>
+      {(currentPage === "home" || currentPage === "katalog") && (
+        <footer className="py-6 mt-4">
+          <div className="container px-4 text-center">
+            <div className="glass-card rounded-xl md:rounded-2xl p-4">
+              <p className="text-xs text-muted-foreground font-medium">
+                © 2026 Toko Bang Shin • {allSwords.length} Swords • {allMelee.length} Melee • {allItems.length} Items
+              </p>
+              <p className="text-[10px] text-muted-foreground/60 mt-1">
+                Sailor Piece Marketplace — Powered with ⚡
+              </p>
+            </div>
+          </div>
+        </footer>
+      )}
+
+      {/* Bottom Navigation */}
+      <BottomNav
+        activeTab={currentPage}
+        onChangeTab={setCurrentPage}
+        onScanClick={() => setQrModalOpen(true)}
+        onChatClick={() => setSocialModalOpen(true)}
+      />
+
+      {/* Modal Overlays */}
+      <QRScanModal
+        open={qrModalOpen}
+        onClose={() => setQrModalOpen(false)}
+      />
+      <SocialLinksModal 
+        open={socialModalOpen} 
+        onClose={() => setSocialModalOpen(false)} 
+      />
     </div>
   );
 };

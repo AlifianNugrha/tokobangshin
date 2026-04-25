@@ -45,7 +45,7 @@ export const allSwords: ProductBundle[] = [
   {
     id: "shadowsword",
     name: "Shadow Sword",
-    price: "Rp 8.000",
+    price: "Rp 10.000",
     subtitle: "Syarat dasar Atomic Sword",
     category: "sword",
     emoji: "🌘",
@@ -83,7 +83,7 @@ export const allSwords: ProductBundle[] = [
   },
   {
     id: "aizenv1",
-    price: "Rp 8.000",
+    price: "Rp 10.000",
     name: "Aizen Sword (V1)",
     subtitle: "Manipulator — Hollow Island",
     category: "sword",
@@ -163,7 +163,7 @@ export const allSwords: ProductBundle[] = [
   },
   {
     id: "aizenv2",
-    price: "Rp 10.000",
+    price: "Rp 15.000",
     name: "True Aizen (True Manipulator)",
     subtitle: "Aizen V2 — Soul Dominion",
     category: "sword",
@@ -238,7 +238,7 @@ export const allSwords: ProductBundle[] = [
   {
     id: "cidv2",
     name: "Atomic Sword",
-    price: "Rp 10.000",
+    price: "Rp 15.000",
     subtitle: "Cid V2 — Lawless Island",
     category: "sword",
     emoji: "⚛️",
@@ -278,7 +278,7 @@ export const allSwords: ProductBundle[] = [
   {
     id: "icequeen",
     name: "Ice Queen Sword",
-    price: "Rp 10.000",
+    price: "Rp 15.000",
     subtitle: "Esdeath — Ice Update terbaru!",
     category: "sword",
     emoji: "❄️",
@@ -308,6 +308,52 @@ export const allSwords: ProductBundle[] = [
 
 
 export const allMelee: ProductBundle[] = [
+  {
+    id: "dio",
+    name: "DIO (The World)",
+    price: "Tanya Admin",
+    subtitle: "Vampire Lord — Time Stop",
+    category: "melee",
+    emoji: "🧛‍♂️",
+    materials: [
+      { qty: 1, name: "Vampire Mask" },
+      { qty: 5, name: "Timestop Shard" },
+    ],
+    cash: "Tanya Admin",
+    gems: 0,
+  },
+  {
+    id: "cosmic-garou",
+    name: "Cosmic Garou",
+    price: "Rp 70.000",
+    subtitle: "Cosmic Fear Awakened Mode",
+    category: "melee",
+    emoji: "🌌",
+    materials: [
+      { qty: 1, name: "Cosmic Core" },
+      { qty: 10, name: "Stardust Fragment" },
+      { qty: 25, name: "Fear Essence" },
+    ],
+    cash: "Tanya Admin",
+    gems: 50000,
+    titleRequired: "Absolute Evil",
+  },
+  {
+    id: "frieren",
+    name: "Frieren (Great Mage)",
+    price: "Rp 35.000",
+    subtitle: "High Magic Damage — Mage Tower",
+    category: "melee",
+    emoji: "🪄",
+    materials: [
+      { qty: 1, name: "Grimoire of Frieren" },
+      { qty: 5, name: "Mana Crystal" },
+      { qty: 10, name: "Ancient Magic Dust" },
+    ],
+    cash: "5 Juta",
+    gems: 25000,
+    titleRequired: "Great Mage",
+  },
   {
     id: "gojo",
     name: "Gojo (Strongest of Today V1)",
@@ -379,7 +425,7 @@ export const allMelee: ProductBundle[] = [
   {
     id: "alucard",
     name: "Alucard (Vampire King)",
-    price: "Rp 8.000",
+    price: "Rp 10.000",
     subtitle: "Lifesteal super tebal — Sailor Island",
     category: "melee",
     emoji: "🧛",
@@ -396,7 +442,7 @@ export const allMelee: ProductBundle[] = [
   {
     id: "gojov2",
     name: "Strongest of Today (Gojo V2)",
-    price: "Rp 9.000",
+    price: "Rp 10.000",
     subtitle: "High AoE + farming — Shinjuku Island",
     category: "melee",
     emoji: "💠",
@@ -421,7 +467,7 @@ export const allMelee: ProductBundle[] = [
   {
     id: "sukunav2",
     name: "Strongest in History (Sukuna V2)",
-    price: "Rp 9.000",
+    price: "Rp 10.000",
     subtitle: "Top-tier AoE & endgame scaling — Shinjuku",
     category: "melee",
     emoji: "🔥",
@@ -446,7 +492,7 @@ export const allMelee: ProductBundle[] = [
   {
     id: "gilgamesh",
     name: "Gilgamesh (King of Heroes) + F Move",
-    price: "Rp 10.000",
+    price: "Rp 12.000",
     subtitle: "Farming efficiency terbaik — Boss Island",
     category: "melee",
     emoji: "👑",
@@ -515,7 +561,7 @@ export const allMelee: ProductBundle[] = [
   {
     id: "saberalter",
     name: "Saber Alter (Corrupt Excalibur)",
-    price: "Rp 10.000",
+    price: "Rp 13.000",
     subtitle: "High burst corruption — Boss Island",
     category: "melee",
     emoji: "🖤",
@@ -561,7 +607,7 @@ export const allMelee: ProductBundle[] = [
   {
     id: "moonslayer",
     name: "Moon Slayer (Six Eyed Demon) + F Move",
-    price: "Rp 10.000",
+    price: "Rp 15.000",
     subtitle: "Quick burst + low cooldown — TERBARU!",
     category: "melee",
     emoji: "🌙",
@@ -592,7 +638,7 @@ export const allItems: ProductBundle[] = [
   {
     id: "clanreroll",
     name: "Clan Reroll",
-    price: "Rp 1.000crr/2.000",
+    price: "Rp 2.000",
     subtitle: "Ganti Clan (Common to Mythical)",
     category: "item",
     emoji: "🎲",
@@ -601,7 +647,7 @@ export const allItems: ProductBundle[] = [
   {
     id: "racereroll",
     name: "Race Reroll",
-    price: "Rp 1.000rr/1.000",
+    price: "Rp 1.000",
     subtitle: "Ganti Ras (Human, Mink, Cyb, etc.)",
     category: "item",
     emoji: "🧬",
@@ -610,7 +656,7 @@ export const allItems: ProductBundle[] = [
   {
     id: "traitreroll",
     name: "Trait Reroll",
-    price: "Rp 1000trr/1.000",
+    price: "Rp 1.000",
     subtitle: "Ganti Pasif/Trait Senjata",
     category: "item",
     emoji: "✨",
@@ -619,17 +665,26 @@ export const allItems: ProductBundle[] = [
   {
     id: "mythicalchest",
     name: "Mythical Chest (Gems)",
-    price: "1 / 1.000",
+    price: "Rp 1.000",
     subtitle: "Paket Gems untuk Gacha",
     category: "item",
     emoji: "💎",
     materials: [],
   },
-
+  {
+    id: "jokititle",
+    name: "Joki Title",
+    price: "DM Admin",
+    subtitle: "Pengerjaan Title (Semua Island)",
+    category: "item",
+    emoji: "🏆",
+    materials: [],
+    howToGet: "Hubungi Admin via WhatsApp",
+  },
   {
     id: "auracrate",
     name: "Aura Crate",
-    price: "1 / 1.000",
+    price: "Rp 1.000",
     subtitle: "Gacha Aura Visual",
     category: "item",
     emoji: "✨",
@@ -638,7 +693,7 @@ export const allItems: ProductBundle[] = [
   {
     id: "cosmeticchest",
     name: "Cosmetic Chest",
-    price: "1 / 1.000",
+    price: "Rp 1.000",
     subtitle: "Gacha Skin Senjata",
     category: "item",
     emoji: "📦",

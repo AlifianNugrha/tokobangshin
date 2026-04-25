@@ -20,6 +20,9 @@ import {
   ChevronDown,
   Tag,
   Check,
+  Sword,
+  Swords,
+  Package,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ProductBundle } from "@/data/products";
@@ -49,9 +52,9 @@ const ProductDetailModal = ({ product, open, onOpenChange }: Props) => {
 
   const handleBuy = () => {
     const categoryName = 
-      product.category === "sword" ? "🗡️ Sword" : 
-      product.category === "melee" ? "👊 Melee" : 
-      "📦 Item/Material";
+      product.category === "sword" ? "Sword" : 
+      product.category === "melee" ? "Melee" : 
+      "Item/Material";
 
     const fSkillInfo = product.fSkill 
       ? `🔥 + F Move: Includes materials to unlock F Skill\n` 
@@ -95,9 +98,11 @@ const ProductDetailModal = ({ product, open, onOpenChange }: Props) => {
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
-              <span className="text-8xl drop-shadow-lg animate-pulse">
-                {product.emoji}
-              </span>
+              <div className="text-primary/30 flex items-center justify-center animate-pulse drop-shadow-lg">
+                {product.category === "sword" ? <Sword className="w-24 h-24" /> : 
+                 product.category === "melee" ? <Swords className="w-24 h-24" /> : 
+                 <Package className="w-24 h-24" />}
+              </div>
             </div>
           )}
           {/* Gradient overlay */}
@@ -109,7 +114,11 @@ const ProductDetailModal = ({ product, open, onOpenChange }: Props) => {
             <div className="flex justify-between items-start gap-4">
               <div>
                 <DialogTitle className="text-2xl font-extrabold flex items-center gap-3">
-                  <span className="text-3xl">{product.emoji}</span>
+                  <span className="text-primary p-2 rounded-xl bg-muted/50 border border-border/50">
+                    {product.category === "sword" ? <Sword className="w-6 h-6" /> : 
+                     product.category === "melee" ? <Swords className="w-6 h-6" /> : 
+                     <Package className="w-6 h-6" />}
+                  </span>
                   {product.name}
                 </DialogTitle>
                 <DialogDescription className="text-base text-muted-foreground mt-1">
@@ -229,8 +238,8 @@ const ProductDetailModal = ({ product, open, onOpenChange }: Props) => {
           {/* Extra Materials */}
           {product.extraMaterials?.map((extra) => (
             <div key={extra.label} className="bg-muted/50 rounded-xl p-4">
-              <h4 className="text-sm font-bold text-foreground mb-3">
-                📦 {extra.label}
+              <h4 className="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
+                <Package className="w-4 h-4 text-muted-foreground" /> {extra.label}
               </h4>
               <div className="flex flex-wrap gap-2">
                 {extra.items.map((m) => (
